@@ -5,6 +5,15 @@ from torch.utils.data import Dataset, DataLoader
 import torch.optim as optim
 import numpy as np
 import matplotlib.pyplot as plt
+import torch
+import torch.nn as nn
+import xarray as xr
+from torch.utils.data import Dataset, DataLoader
+import torch.optim as optim
+import numpy as np
+import matplotlib.pyplot as plt
+import datetime
+
 
 from sklearn.metrics import r2_score, root_mean_squared_error
 
@@ -168,12 +177,12 @@ class UNet3DNDVIForecaster(nn.Module):
         # print("enc2 shape", enc2.shape)
 
         bottleneck = self.bottleneck(temporal_pool2)  # -> [B, 64, T/4, H/4, W/4]
-        print("bottleneck", bottleneck.shape)
+        # print("bottleneck", bottleneck.shape)
         #  compress temporal dimension
         bottleneck = torch.mean(bottleneck, dim=2, keepdim=True)  # shape: [B, 64, 1, H/4, W/4]
 
         u2 = self.up2(bottleneck)
-        print("u2", u2.shape, "enc2",enc2.shape)
+        # print("u2", u2.shape, "enc2",enc2.shape)
         u2 = torch.cat((u2, torch.mean(enc2, dim=2, keepdim=True)), dim=1)# skip connection
         # u2 = torch.cat((u2, enc2), dim=1)# skip connection
         dec2 = self.dec2(u2)
@@ -269,7 +278,9 @@ def plot_predictions_vs_actuals(model, val_loader, device="cpu", sample_size=100
         ax.legend()
 
     plt.tight_layout()
-    plt.show(block=True)
+    # plt.show(block=True)
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    fig.savefig(f"results/CNN_results_{timestamp}.png")
 
 
 #  Load NDVI arrays for 2012-2025
@@ -285,6 +296,10 @@ width = ndvi_array .shape[2]
 future_steps = 4
 
 
+import os
+os.makedirs("checkpoints", exist_ok=True)
+os.makedirs("results", exist_ok=True)
+
 
 # ----------------------------
 # DataLoader
@@ -298,10 +313,11 @@ train_loader = DataLoader(train_ds, batch_size=4, shuffle=True)
 val_loader = DataLoader(val_ds, batch_size=4)
 
 model = UNet3DNDVIForecaster(in_channels=1, future_steps=future_steps)
-model = model.to("cuda" if torch.cuda.is_available() else "cpu")
+
 
 #  Is the following just a repetition?
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model = nn.DataParallel(model) # Pass different batches to different GPU?
 model = model.to(device)
 
 
@@ -312,9 +328,9 @@ optimizer = optim.Adam(model.parameters(), lr=1e-4)
 # -----------------------------
 # Training loop
 # -----------------------------
-num_epochs = 10
+num_epochs = 2
 for epoch in range(num_epochs):
-    print(epoch)
+    print("Epoch", epoch)
     model.train()
     epoch_loss = 0
 
@@ -337,6 +353,8 @@ for epoch in range(num_epochs):
         epoch_loss += loss.item()
 
     print(f"Epoch {epoch+1}, Loss: {epoch_loss:.4f}")
+    if (epoch + 1) % 5 == 0:  # every 5 epochs
+        torch.save(model.state_dict(), f"checkpoints/model_epoch_{epoch + 1}.pth")
 
 
 
