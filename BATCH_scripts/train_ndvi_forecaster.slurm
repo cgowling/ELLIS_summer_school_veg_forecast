@@ -2,8 +2,8 @@
 # Job name
 #SBATCH --job-name=ndvi_forecast_test
 # Standard output and error:
-#SBATCH -o ./out.%j
-#SBATCH -e ./err.%j
+#SBATCH -o ./log_files/out.%j
+#SBATCH -e ./log_files/err.%j
 # Initial working directory:
 #SBATCH -D ./
 #SBATCH --time=00:10:00
@@ -19,6 +19,7 @@ module purge
 
 module load intel/21.2.0 impi/2021.2 anaconda/3/2023.03
 
+source ~/.bashrc
 # Activate environment
 conda activate test_env
 
