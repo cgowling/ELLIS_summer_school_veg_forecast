@@ -5,16 +5,8 @@ from torch.utils.data import Dataset, DataLoader
 import torch.optim as optim
 import numpy as np
 import matplotlib.pyplot as plt
-import torch
-import torch.nn as nn
-import xarray as xr
-from torch.utils.data import Dataset, DataLoader
-import torch.optim as optim
-import numpy as np
-import matplotlib.pyplot as plt
 import datetime
-
-
+import os
 from sklearn.metrics import r2_score, root_mean_squared_error
 
 
@@ -103,8 +95,6 @@ class NDVIDataset(Dataset):
         x = x.unsqueeze(0)  # add channel dim -> [1, 12, H, W]
         return x, y  # x: [1, 12, H, W], y: [4, H, W]
 
-
-import torch.nn.functional as F
 
 class ConvBlock(nn.Module):
     def __init__(self, in_channels, out_channels):
@@ -284,7 +274,7 @@ def plot_predictions_vs_actuals(model, val_loader, device="cpu", sample_size=100
 
 
 #  Load NDVI arrays for 2012-2025
-path_to_NDVI_data = "/Users/cg411/Documents/PASSAGE/PycharmProjects/passage_pixel_based_veg_forecast/data_prep/VNP43C4/NDVI_VNP43C4_v002_GHA.nc"
+path_to_NDVI_data = "/u/mp006/data/NDVI_VNP43C4_v002_GHA.nc"
 
 
 ndvi_array = get_ndvi_test_array(path_to_NDVI_data)
@@ -296,7 +286,7 @@ width = ndvi_array .shape[2]
 future_steps = 4
 
 
-import os
+
 os.makedirs("checkpoints", exist_ok=True)
 os.makedirs("results", exist_ok=True)
 
@@ -317,7 +307,6 @@ model = UNet3DNDVIForecaster(in_channels=1, future_steps=future_steps)
 
 #  Is the following just a repetition?
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model = nn.DataParallel(model) # Pass different batches to different GPU?
 model = model.to(device)
 
 
