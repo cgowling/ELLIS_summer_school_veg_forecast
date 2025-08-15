@@ -1,31 +1,36 @@
-#!/bin/bash
-# Job name
+#!/bin/bash -l
 #SBATCH --job-name=ndvi_forecast_test
 # Standard output and error:
 #SBATCH -o ./log_files/out.%j
 #SBATCH -e ./log_files/err.%j
-# Initial working directory:
 #SBATCH -D ./
-#SBATCH --time=00:10:00
-#SBATCH --nodes=1            # Request 1 or more full nodes
-#SBATCH --constraint="gpu"   #   providing GPUs.
-#SBATCH --gres=gpu:a100:4    # Request 4 GPUs per node.
-#SBATCH --ntasks-per-node=4  # Run one task per GPU
-#SBATCH --cpus-per-task=18   #   using 18 cores each.
-#SBATCH --mem=32G
+#SBATCH --ntasks=1         # launch job on a single core
+#SBATCH --cpus-per-task=1  #   on a shared node
+#SBATCH --mem=2000MB       # memory limit for the job
+#SBATCH --time=0:10:00
 
-# Load required modules (if using module system)
 module purge
+module load gcc/10 impi/2021.2
+module load anaconda/3/2021.05
 
-module load intel/21.2.0 impi/2021.2 anaconda/3/2023.03
 
 source ~/.bashrc
 # Activate environment
 conda activate test_env
 
+
 # Optional: change to your working directory
 cd ELLIS_summer_school_veg_forecast/model_building/
 pwd
 
+# Set number of OMP threads to fit the number of available cpus, if applicable.
+export OMP_NUM_THREADS=1
+
+
+
 # Run the training script
 srun python CNN_3d.py
+
+
+
+
