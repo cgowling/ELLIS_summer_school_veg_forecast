@@ -18,9 +18,9 @@ module purge
 module load gcc/10 impi/2021.2
 module load anaconda/3/2021.05
 
-conda deactivate
-#source ~/.bashrc
+source ~/.bashrc
 # Activate environment
+conda deactivate
 which python3
 
 conda activate test_env
