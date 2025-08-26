@@ -14,19 +14,21 @@ module load gcc/10 impi/2021.2
 module load anaconda/3/2021.05
 
 
-source ~/.bashrc
+#source ~/.bashrc
 # Activate environment
-conda activate test_env
+#conda activate test_env
 
+cd 
+$echo pwd 
 
 # Optional: change to your working directory
-cd ELLIS_summer_school_veg_forecast/model_building/
+cd /u/mp006/ELLIS_summer_school_veg_forecast/model_building/
 pwd
 
 # Set number of OMP threads to fit the number of available cpus, if applicable.
-export OMP_NUM_THREADS=1
+#export OMP_NUM_THREADS=1
 
 
 
 # Run the training script
-srun python CNN_3d.py
+#srun python CNN_3d.py
