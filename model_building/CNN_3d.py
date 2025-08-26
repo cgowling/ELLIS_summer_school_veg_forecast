@@ -1,13 +1,16 @@
 import torch
 import torch.nn as nn
+import numpy as np 
 import xarray as xr
 from torch.utils.data import Dataset, DataLoader
 import torch.optim as optim
-import numpy as np
 import matplotlib.pyplot as plt
 import datetime
 import os
 from sklearn.metrics import r2_score, root_mean_squared_error
+import functools
+
+print = functools.partial(print, flush=True)
 
 
 def get_ndvi_test_array(path_to_NDVI_data):
@@ -317,7 +320,7 @@ optimizer = optim.Adam(model.parameters(), lr=1e-4)
 # -----------------------------
 # Training loop
 # -----------------------------
-num_epochs = 2
+num_epochs = 10
 for epoch in range(num_epochs):
     print("Epoch", epoch)
     model.train()

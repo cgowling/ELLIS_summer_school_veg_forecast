@@ -13,11 +13,14 @@ module purge
 module load gcc/10 impi/2021.2
 module load anaconda/3/2021.05
 
-
+conda deactivate 
 #source ~/.bashrc
 # Activate environment
-#conda activate test_env
+which python3 
 
+conda activate test_env
+
+ 
 cd 
 $echo pwd 
 
@@ -26,9 +29,9 @@ cd /u/mp006/ELLIS_summer_school_veg_forecast/model_building/
 pwd
 
 # Set number of OMP threads to fit the number of available cpus, if applicable.
-#export OMP_NUM_THREADS=1
-
+export OMP_NUM_THREADS=1
+which python3
 
 
 # Run the training script
-#srun python CNN_3d.py
+srun python3 CNN_3d.py
