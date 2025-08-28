@@ -19,8 +19,6 @@ conda deactivate
 which python3 
 
 conda activate test_env
-
- 
 cd 
 $echo pwd 
 
