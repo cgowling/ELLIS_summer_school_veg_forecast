@@ -10,26 +10,26 @@
 #SBATCH --time=0:10:00
 
 module purge
+
+# Load necessary modules
 module load gcc/10 impi/2021.2
 module load anaconda/3/2021.05
 
 conda deactivate 
 #source ~/.bashrc
-# Activate environment
-which python3 
 
-conda activate test_env
-cd 
-$echo pwd 
+# Activate  conda environment
+conda activate myenv_build
 
-# Optional: change to your working directory
-cd /u/mp006/ELLIS_summer_school_veg_forecast/model_building/
+# Check the python from the conda environment is being used
+which python3
+
+# Change to your working directory
+cd /u/mp006/ELLIS_summer_school_veg_forecast/model_building/test_model
 pwd
 
 # Set number of OMP threads to fit the number of available cpus, if applicable.
 export OMP_NUM_THREADS=1
-which python3
-
 
 # Run the training script
 srun python3 CNN_3d.py

@@ -277,7 +277,7 @@ def plot_predictions_vs_actuals(model, val_loader, device="cpu", sample_size=100
 
 
 #  Load NDVI arrays for 2012-2025
-path_to_NDVI_data = "/u/mp006/data/NDVI_VNP43C4_v002_GHA.nc"
+path_to_NDVI_data = "/ptmp/mp002/ellis/veg_forecast/NDVI_VNP43C4_v002_GHA.nc"
 
 
 ndvi_array = get_ndvi_test_array(path_to_NDVI_data)
@@ -291,7 +291,7 @@ future_steps = 4
 
 
 os.makedirs("checkpoints", exist_ok=True)
-os.makedirs("results", exist_ok=True)
+os.makedirs("../results", exist_ok=True)
 
 
 # ----------------------------
