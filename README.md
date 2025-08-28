@@ -4,7 +4,7 @@
 Raven documentation 
 https://docs.mpcdf.mpg.de/doc/computing/raven-user-guide.html
 
-## Login 
+## Login to Raven 
  (if not on a network that allows direct login)
 ```
 $ ssh <user>@gate.mpcdf.mpg.de
@@ -28,7 +28,7 @@ Check for exisitng keys
 $ ls -al ~/.ssh
 ```
 
-generate shh key 
+generate ssh key 
 ```shell
 $ ssh-keygen -t rsa -b 4096 -C "<your_email>@example.com"
 ```
@@ -46,8 +46,7 @@ Host github.com
   IdentityFile ~/.ssh/id_ed25519
 ```
 
-copy contents of id_ed25519.pub 
-Add key to github accoutns 
+copy contents of  your public key and add a new key to  your github account
 
 ## Clone repository 
 
@@ -57,5 +56,13 @@ $ git clone git@github.com:cgowling/ELLIS_summer_school_veg_forecast.git
 
 
 ## create conda environment 
+
+```
+$ module load anaconda/3/2023.03
+```
+
+```
+$ conda env create -f environment.yaml
+```
 
 ## test run Batch script 
