@@ -291,7 +291,7 @@ future_steps = 4
 
 
 os.makedirs("checkpoints", exist_ok=True)
-os.makedirs("../results", exist_ok=True)
+os.makedirs("results", exist_ok=True)
 
 
 # ----------------------------
