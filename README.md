@@ -68,7 +68,24 @@ $ conda create --name myenv --file spec-file.txt
 
 Now that  the Initial setup is complete we can test the setup by running a small batch run 
 
+```
+$ cd BATCH_scripts
+$ mkdir log_files # this will be ignored by git 
+```
 
+Jobs can be submitted through batch files  see the example 'train_ndvi_simple.slurm'. Within these files you specify .....
+(See the Raven documentation for more examples)
+To sumbit a job use the sbatch command followed by your batch script
+```
+sbatch train_ndvi_simple.slurm
+```
+
+To check on your run, replace with your  jobid which is printed out when a job is submitted 
+
+```
+$ scontrol show jobid -dd <jobid>
+```
+Output and error files in the above slurm file have been specified to be written to the log_files folder
 
 ### Data 
 
