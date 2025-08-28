@@ -11,7 +11,7 @@ $ ssh <user>@gate.mpcdf.mpg.de
 
 From within network or after the above login, if on external network 
 ```
-$ssh <user>@raven.mpcdf.mpg.de
+$ ssh <user>@raven.mpcdf.mpg.de
 ```
 
 ## Set up ssh Key 
@@ -43,25 +43,38 @@ Host github.com
   IdentityFile ~/.ssh/id_ed25519
 ```
 
+Copy contents of your public key and add a new key to  your github account
 
-
-copy contents of  your public key and add a new key to  your github account
-
-## Clone repository 
-
+## Clone ELLIS_summer_school_veg_forecast repository to your Raven account
+Once you've logged in your should be somewhere like `/u/<userid>`. From here clone the repository 
 ```
 $ git clone git@github.com:cgowling/ELLIS_summer_school_veg_forecast.git
 ```
 
 
-## create conda environment 
+
+## Create conda environment 
+Navigate into the repository you have just cloned 
 
 ```
 $ module load anaconda/3/2023.03
 ```
 
 ```
-$ conda env create -f environment.yaml
+$ conda create --name myenv --file spec-file.txt
 ```
 
-## test run Batch script 
+## Test run Batch script 
+
+Now that  the Initial setup is complete we can test the setup by running a small batch run 
+
+
+
+### Data 
+
+
+The data for this challenge can be found at the shared directory 
+
+```
+/ptmp/mp002/ellis/veg_forecast
+```
