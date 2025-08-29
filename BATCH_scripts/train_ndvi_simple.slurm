@@ -19,7 +19,7 @@ conda deactivate
 #source ~/.bashrc
 
 # Activate  conda environment
-conda activate myenv_build
+conda activate myenv
 
 # Check the python from the conda environment is being used
 which python3
