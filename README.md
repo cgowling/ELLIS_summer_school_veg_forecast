@@ -135,15 +135,15 @@ You may want to focus your efforts on this region covered by the PASSAGE researc
 
 **PASSAGE bbox**
 ```python
-geometry = [32.098 ,7.186,43.330,  0.754])
+geometry = [32.098 ,7.186,43.330,  0.754]
 ```
 
 **Data summary**
 
 | Data source                 | Indicator(s)                  | Units                   | Source resolution | Resampling method | Indicator label                 |
 |-----------------------------|-------------------------------|-------------------------|-------------------|-------------------|---------------------------------|
-| VIIRS: VNP43C4 v002         | NDVI                          | NA                      | ~5km              | NA                | NA                              |
-| CHIRPS v002                 | Sum Precipitation             | mm per week             | ~5km              | nearest           | NA                              |
+| VIIRS: VNP43C4 v002         | NDVI                          | NA                      | ~5km              | NA                | 'NDVI_VNP43C4_GHA'              |
+| CHIRPS v002                 | Sum Precipitation             | mm per week             | ~5km              | nearest           | 'CHIRPS_mm_per_week'            |
 | Era5 land                   | total evaporation sum         | m of water equivalent   | ~9km              | nearest           | 'total_evaporation_sum'         |
 |                             | potential evaporation sum     | m per week              | ~9km              | nearest           | 'potential_evaporation_sum'     |
 |                             | total precipitation sum       | m per week              | "                 | "                 | 'total_precipitation_sum'       |
