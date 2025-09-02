@@ -196,16 +196,3 @@ batch = next(iter(loader))
 print("Dynamic:", batch["dynamic"].shape)  # (64, 4, 7) → [NDVI, CHIRPS, 5xERA5]
 print("Static:", batch["static"].shape)    # (64, 1)   → DEM
 print("Target:", batch["target"].shape)    # (64,)
-
-
-# In[14]:
-
-
-ndvi_data = ndvi_data["NDVI_VNP43C4_GHA"].values
-time_len, lat_len, lon_len = ndvi_data.shape
-ndvi_flat = ndvi_data.reshape(time_len, -1)
-
-landcover = copernicus_data["band_data"].values
-valid_mask = np.isin(landcover, [20, 30])
-mask_flat = valid_mask.reshape(-1)
-ndvi_vals = ndvi_flat[:, mask_flat].reshape(-1)
