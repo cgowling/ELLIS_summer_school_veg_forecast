@@ -1,0 +1,35 @@
+# file in .nc stayed in main claster mpcdf but we have code :)
+# code below
+
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
+
+import torch
+import torch.nn as nn
+from torch.utils.data import TensorDataset, DataLoader
+
+import random
+import numpy as np
+from tqdm import trange
+from sklearn.metrics import r2_score
+import rasterio
+import xarray as xr
+
+#from captum.attr import Saliency, IntegratedGradients
+# Full descriptive names for titles
+path_to_NDVI_data = "/ptmp/mp002/ellis/veg_forecast/NDVI_VNP43C4_v002_GHA.nc"
+NDVI_data=xr.open_dataset(path_to_NDVI_data)
+
+NDVI_data.info()
+
+NDVI_data_extract = NDVI_data["NDVI_VNP43C4_GHA"]
+
+#NDVI_data_extract['time']=xr.decode_cf(NDVI_data_extract).time
+ndvi =  NDVI_data_extract.assign_coords(week=NDVI_data_extract['time'].dt.isocalendar().week)
+
+weekly_climatology = ndvi.groupby('week').mean(dim='time', skipna=True)
+print(weekly_climatology)
+weekly_climatology.sel(week=1).plot(cmap='YlGn')
+weekly_climatology.to_netcdf("/ptmp/mp002/ellis/veg_forecast/weekly_ndvi_climatology.nc")
+
